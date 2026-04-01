@@ -1,0 +1,14 @@
+name: BayesianMethodsForClinicalTrials
+channels:
+  - conda-forge
+dependencies:
+  - pytest
+  - nbclassic
+  - jupytext
+  - nbmake
+  - black
+  - flake8
+  - pip
+  - pip:
+    - nbformat
+    - pdfplumber

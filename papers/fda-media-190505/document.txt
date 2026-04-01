@@ -1,0 +1,1350 @@
+
+--- Page 1 ---
+Use of Bayesian
+Methodology in
+Clinical Trials of Drug
+and Biological Products
+Guidance for Industry
+DRAFT GUIDANCE
+This guidance document is being distributed for comment purposes only.
+Comments and suggestions regarding this draft document should be submitted within 60 days of
+publication in the Federal Register of the notice announcing the availability of the draft
+guidance. Submit electronic comments to https://www.regulations.gov. Submit written
+comments to the Dockets Management Staff (HFA-305), Food and Drug Administration, 5630
+Fishers Lane, Rm. 1061, Rockville, MD 20852. All comments should be identified with the
+docket number listed in the notice of availability that publishes in the Federal Register.
+For questions regarding this draft document, contact (CDER) Scott Goldie at
+Scott.Goldie@fda.hhs.gov, or (CBER) Office of Communication, Outreach and Development,
+800-835-4709 or 240-402-8010.
+U.S. Department of Health and Human Services
+Food and Drug Administration
+Center for Drug Evaluation and Research (CDER)
+Center for Biologics Evaluation and Research (CBER)
+January 2026
+Biostatistics
+
+--- Page 2 ---
+Use of Bayesian
+Methodology in
+Clinical Trials of Drug
+and Biological Products
+Guidance for Industry
+Additional copies are available from:
+Division of Drug Information
+Center for Drug Evaluation and Research
+Food and Drug Administration
+Phone: 855-543-3784 or 301-796-3400
+Email: druginfo@fda.hhs.gov
+https://www.fda.gov/drugs/guidance-compliance-regulatory-information/guidances-drugs
+and/or
+Office of Communication, Outreach, and Development
+Center for Biologics Evaluation and Research
+Food and Drug Administration
+Phone: 800-835-4709 or 240-402-8010; Email: industry.biologics@fda.hhs.gov
+https://www.fda.gov/vaccines-blood-biologics/guidance-compliance-regulatory-information-biologics/biologics-
+guidances
+U.S. Department of Health and Human Services
+Food and Drug Administration
+Center for Drug Evaluation and Research (CDER)
+Center for Biologics Evaluation and Research (CBER)
+January 2026
+Biostatistics
+
+--- Page 3 ---
+
+
+--- Page 4 ---
+Contains Nonbinding Recommendations
+Draft — Not for Implementation
+TABLE OF CONTENTS
+I. INTRODUCTION............................................................................................................. 1
+II. BACKGROUND ............................................................................................................... 1
+A. Definition ........................................................................................................................................ 1
+B. Important Concepts ....................................................................................................................... 2
+III. SITUATIONS WHERE BAYESIAN METHODS HAVE BEEN USED .................... 2
+A. Borrowing from Previous Clinical Trials .................................................................................... 3
+B. Augmenting a Randomized Concurrent Control Using an External Control or
+Nonconcurrent Control Data ................................................................................................................. 3
+C. Pediatric Extrapolation ................................................................................................................. 3
+D. Borrowing Information Across Similar Diseases or Disease Subtypes ..................................... 4
+E. Borrowing Information Between Subgroups of a Patient Population (i.e., Subgroup
+Analysis) .................................................................................................................................................. 4
+F. Dose-Finding Trials ....................................................................................................................... 5
+IV. SUCCESS CRITERIA AND OPERATING CHARACTERISTICS ........................... 5
+A. Success Criteria: Definition and Role in Regulatory Decision-making .................................... 5
+B. Operating Characteristics ............................................................................................................. 8
+V. PRIOR DISTRIBUTIONS ............................................................................................. 10
+A. Overview and General Principles ............................................................................................... 10
+B. Noninformative and Minimally Informative Priors ................................................................. 10
+C. Skeptical Priors ............................................................................................................................ 11
+D. Informative Priors ....................................................................................................................... 11
+E. Quantifying the influence of the prior distribution .................................................................. 18
+F. Sensitivity analyses....................................................................................................................... 19
+VI. ESTIMANDS AND MISSING DATA IN A BAYESIAN SETTING ......................... 19
+VII. SOFTWARE AND COMPUTATION .......................................................................... 20
+VIII. DOCUMENTING AND REPORTING BAYESIAN ANALYSES ............................ 20
+A. Documenting Plans for Bayesian Analyses ................................................................................ 21
+B. Reporting Results from Bayesian Analyses ............................................................................... 23
+IX. GENERAL REFERENCES ........................................................................................... 24
+
+--- Page 5 ---
+Contains Nonbinding Recommendations
+Draft — Not for Implementation
+1 Use of Bayesian Methodology in Clinical Trials of Drugs and
+2 Biologics Guidance for Industry1
+3
+4
+5 This draft guidance, when finalized, will represent the current thinking of the Food and Drug
+6 Administration (FDA or Agency) on this topic. It does not establish any rights for any person and is not
+7 binding on FDA or the public. You can use an alternative approach if it satisfies the requirements of the
+8 applicable statutes and regulations. To discuss an alternative approach, contact the FDA staff responsible
+9 for this guidance as listed on the title page.
+10
+11
+12
+13
+14 I. INTRODUCTION
+15
+16 This document provides guidance to sponsors and applicants submitting investigational new drug
+17 applications (INDs), new drug applications (NDAs), biologics licensing applications (BLAs), or
+18 supplemental applications on the appropriate use of Bayesian methods in clinical trials. Bayesian
+19 methods can be used in various ways in clinical trials. For example, Bayesian calculations can be
+20 used to govern the timing and adaptation rules for an interim analysis in an adaptive design, to
+21 inform design elements (e.g., dose selection) for subsequent clinical trials, or to support primary
+22 inference in a trial. The primary focus of this guidance is on the use of Bayesian methods to
+23 support primary inference in clinical trials intended to support the effectiveness and safety of
+24 drugs.2
+25
+26 In general, FDA’s guidance documents do not establish legally enforceable responsibilities.
+27 Instead, guidances describe the Agency’s current thinking on a topic and should be viewed only
+28 as recommendations, unless specific regulatory or statutory requirements are cited. The use of
+29 the word should in Agency guidances means that something is suggested or recommended, but
+30 not required.
+31
+32
+33 II. BACKGROUND
+34
+35 A. Definition
+36
+37 Bayesian statistics is an approach to estimation or hypothesis testing to draw inference based on
+38 the use of Bayes' theorem. In a Bayesian analysis, data collected in a study are combined with a
+39 prior distribution that captures the pre-study information about a parameter of interest to form a
+1 This guidance has been prepared by the Office of Biostatistics in the Center for Drug Evaluation and Research and
+the Division of Biostatistics in the Center for Biologics Evaluation and Research at the Food and Drug
+Administration.
+2 For the purposes of this guidance, all references to drugs include both human drugs and biological products unless
+otherwise specified.
+1
+
+--- Page 6 ---
+Contains Nonbinding Recommendations
+Draft — Not for Implementation
+40 posterior distribution that expresses the updated, post-study information about the parameter of
+41 interest (e.g., the primary estimand3). The prior distribution often represents a summary of
+42 information and uncertainty available before the study begins. The posterior distribution can be
+43 used for inference and to draw conclusions about efficacy or safety.
+44
+45 B. Important Concepts
+46
+47 The following are definitions of important concepts used in this guidance:
+48
+49 • The prior distribution or prior is the pre-study probability distribution for model
+50 parameters.
+51
+52 • The likelihood function or likelihood describes the quantitative relationship between the
+53 parameters of interest and the study data. The mathematical form of the likelihood is
+54 determined by the model being used (for example, linear regression, logistic regression,
+55 ordinal regression).
+56
+57 • The posterior distribution or posterior is the post-study probability distribution for the
+58 parameter of interest. It is obtained by combining the prior distribution and the likelihood
+59 using Bayes theorem. It quantitatively summarizes what is known about the parameter of
+60 interest following collection of study data and can be used to draw inferences on the
+61 study hypotheses. Inference is often based on summary measures of this distribution. For
+62 example, evaluation of a treatment effect may be informed by the posterior mean to
+63 estimate the effect, a credible interval to quantify uncertainty around the estimated effect,
+64 and relevant posterior probabilities (e.g., the posterior probability that the effect is greater
+65 than zero). Credible intervals are intervals of possible values for the unobserved
+66 parameter that will contain the parameter value with a specified probability under the
+67 posterior distribution (e.g., 95% posterior probability).
+68
+69 • Bayes theorem is the mathematical rule for combining the prior distribution and
+70 likelihood together to form the posterior distribution.
+71
+72
+73 III. SITUATIONS WHERE BAYESIAN METHODS HAVE BEEN USED
+74
+75 This section discusses settings and specific examples from development programs where
+76 Bayesian methods have been used in submissions to the Agency. Most of these case examples
+77 focus on the use of borrowing or leveraging of previously available trials or information across
+78 populations within a trial. Bayesian methods can also be considered in other settings.
+79
+80
+81
+3 For discussion of estimands, see the ICH guidance for industry E9(R1) Statistical Principles for Clinical Trials:
+Addendum: Estimands and Sensitivity Analysis in Clinical Trials (May 2021). For the most recent version of a
+guidance, check the FDA guidance web page at https://www.fda.gov/regulatory-information/search-fda-guidance-
+documents.
+2
+
+--- Page 7 ---
+Contains Nonbinding Recommendations
+Draft — Not for Implementation
+82 A. Borrowing from Previous Clinical Trials
+83
+84 Under certain circumstances, an informative prior for a clinical trial analysis can be formed
+85 based on results from previous clinical trial(s) of the same drug. For example, borrowing from a
+86 previous trial was used in a phase 3 study to evaluate REBYOTA, a fecal microbiota transplant
+87 product, for the prevention of recurrence of Clostridioides difficile infection (CDI) in individuals
+88 with recurrent CDI. C. difficile is a common cause of antibiotic-associated diarrhea and colitis
+89 and is a major public health burden. The primary analysis of the randomized, double-blind,
+90 placebo-controlled phase 3 study to evaluate the effectiveness of REBYOTA used a Bayesian
+91 model to formally incorporate data from a previous phase 2 placebo-controlled study of
+92 REBYOTA. This analysis supported the effectiveness of REBYOTA, which was approved in
+93 2022. 4
+94
+95 B. Augmenting a Randomized Concurrent Control Using an External Control
+96 or Nonconcurrent Control Data
+97
+98 In some cases, it can be challenging to conduct an adequately powered randomized trial due to
+99 limited population and/or ethical considerations. Borrowing data from an external or
+100 nonconcurrent control to augment the randomized concurrent control may be appealing in these
+101 situations, and Bayesian methods have been proposed to implement such approaches. For
+102 example, Bayesian methods have been proposed to augment the randomized concurrent control
+103 and leverage nonconcurrent control data in the oncology platform trials GBM AGILE5 and
+104 Precision Promise,6 which evaluate marker-targeted treatments for patients with glioblastoma
+105 and pancreatic cancer, respectively. The analyses use a Bayesian model to try to account for
+106 temporal shifts in efficacy outcomes such as tumor response (Saville et al. 2022).7 As another
+107 example, a non-inferiority study of pediatric patients with multiple sclerosis8 was proposed
+108 through the Complex Innovative Trial Design (CID) program9 with a prespecified Bayesian
+109 analysis to leverage information from historical studies of the active comparator.
+110
+111 C. Pediatric Extrapolation
+112
+113 Pediatric extrapolation is defined in the ICH E11(R1)10 guideline as “an approach to providing
+114 evidence in support of effective and safe use of drugs in the pediatric population when it can be
+115 assumed that the course of the disease and the expected response to a medicinal product would
+116 be sufficiently similar in the pediatric [target] and reference (adult or other pediatric)
+4 See prescribing information for Rebyota (fecal microbiota, live – jslm) suspension
+(https://www.fda.gov/media/163587/download?attachment).
+5 For additional details on GBM AGILE, see https://www.clinicaltrials.gov/study/NCT03970447.
+6 For additional details on Precision Promise, see https://www.clinicaltrials.gov/study/NCT04229004.
+7 See the FDA draft guidance for industry Master Protocols for Drug and Biological Product Development
+(December 2023) for additional discussion on the use of nonconcurrent control data in platform trials and potential
+for temporal shifts to lead to bias. When final, this guidance will represent the FDA’s current thinking on this topic.
+8 See CID Case Study: A Study in Pediatric Patients with Multiple Sclerosis.
+(https://www.fda.gov/media/172313/download).
+9 Complex Innovative Trial Design Meeting Program (https://www.fda.gov/drugs/development-resources/complex-
+innovative-trial-design-meeting-program).
+10 See ICH guidance for industry E11(R1) Addendum: Clinical Investigation of Medicinal Products in the Pediatric
+Population (April 2018).
+3
+
+--- Page 8 ---
+Contains Nonbinding Recommendations
+Draft — Not for Implementation
+117 population.” Pediatric extrapolation can extend what is known about the characteristics of
+118 interest in the reference population (e.g., efficacy, safety, and/or dosing) to those of the target
+119 population based on an assessment of the relevant similarities of disease, drug pharmacology,
+120 and response to therapy of the two populations. When some degree of pediatric extrapolation is
+121 justified, Bayesian methods can be considered to borrow data from adults in the analysis of a
+122 pediatric trial by using an informative prior distribution constructed based on results from
+123 previous adult trials. A discussion of safety considerations incorporated into pediatric
+124 extrapolation approaches is discussed in other guidance.11 An example of a Bayesian approach to
+125 facilitate borrowing can be seen in supportive analyses in recent supplements for empagliflozin12
+126 and linagliptin13 for the treatment of pediatric patients with type 2 diabetes mellitus (T2D). It is
+127 critical to consider the relevance14 of the information from adults when considering borrowing.
+128 In these particular cases, the review team concluded that although there are differences in disease
+129 progression between pediatric and adult T2D populations, the pathophysiology of pediatric T2D
+130 is similar to that in adults and so the information was relevant, and borrowing was justified.
+131
+132 D. Borrowing Information Across Similar Diseases or Disease Subtypes
+133
+134 In some cases, distinct diseases or disease subtypes may have similar underlying causes and a
+135 history of similar responses to drugs. For example, there are groups of different types of cancer
+136 that share a specific molecular alteration and may be expected to respond to drugs targeting that
+137 alteration. In such cases, Bayesian methods might be considered to borrow information across
+138 the similar diseases or disease subtypes in evaluating an individual drug. For example, Bayesian
+139 analyses have been proposed for leveraging information about drug effects across related
+140 populations in basket trials that evaluate a drug for multiple diseases or disease subtypes under a
+141 common master protocol. As another example, a randomized, double-blind, placebo-controlled
+142 study in patients with epilepsy with myoclonic-atonic seizures15 (EMAS) was proposed through
+143 the CID program that used a Bayesian primary analysis to borrow information from previous
+144 trials evaluating the effect of the drug in related conditions. The proposed approach leveraged
+145 data from previously conducted trials for different types of epilepsy using a Bayesian
+146 hierarchical model (BHM).
+147
+148 E. Borrowing Information Between Subgroups of a Patient Population (i.e.,
+149 Subgroup Analysis)
+150
+151 It is important to try to understand drug effects in different subgroups of patients. There are
+152 statistical approaches that make use of results from every subgroup when estimating the
+153 treatment effect in each subgroup. One common approach is shrinkage estimation through a
+154 BHM. For a one-way BHM, the estimated treatment effect in one subgroup is a weighted
+11 For further discussion on pediatric extrapolation, see ICH guidance for industry E11(A): Pediatric Extrapolation
+(December 2024).
+12 See FDA Clinical Review (https://www.fda.gov/media/172973/download); FDA Statistical Review:
+(https://www.fda.gov/media/172972/download).
+13 See FDA Clinical Review (https://www.fda.gov/media/172628/download); FDA Statistical Review:
+https://www.fda.gov/media/172630/download).
+14 See section V.D.2 for a discussion of factors that impact the relevance of the data.
+15 See CID Case Study: A Study in Patients with Epilepsy with Myoclonic-Atonic Seizures
+(https://www.fda.gov/media/172312/download).
+4
+
+--- Page 9 ---
+Contains Nonbinding Recommendations
+Draft — Not for Implementation
+155 average of its raw estimated treatment effect (using only the data in that subgroup) and the
+156 overall estimated treatment effect. Shrinkage estimation can increase the precision of the
+157 subgroup estimates. As an example of this approach, a BHM was used to estimate treatment
+158 effects across regions in the Liraglutide Effect and Action in Diabetes: Evaluation of
+159 Cardiovascular Outcome Results trial, which compared liraglutide to placebo in patients with
+160 T2D at high risk for cardiovascular disease. The analyses helped clarify potential differences in
+161 the drug effects across regions (i.e., Asia, Europe, North America, and the rest of the world).16
+162 BHMs have also been used for subgroup analyses that appear in some of FDA’s Drug Trials
+163 Snapshots (Wang et al. 2024). One example is the Rinvoq Drug Trial Snapshot.17
+164
+165 F. Dose-Finding Trials in Oncology
+166
+167 Dose-finding trials for oncology drugs18 have historically utilized non-randomized dose-
+168 escalation trials that seek to identify the maximum tolerated dose (MTD). Dose-escalation
+169 designs using Bayesian methods have been proposed with goals such as improving efficiency
+170 (e.g., reaching the MTD earlier), optimizing dose selection (i.e., minimizing toxicity and/or
+171 improving efficacy), and adding flexibility in terms of cohort sizes and timing of assessments.
+172 Designs which aim to identify the MTD include model-based designs (e.g., continual
+173 reassessment model [CRM], Bayesian logistic regression model [BLRM]) and model-assisted
+174 designs (e.g., Bayesian Optimal Interval Design [BOIN], modified toxicity probability interval
+175 [mTPI], mTPI2) (Ji et al. 2010; Quigley and Conway, 2010; Neuenschwander et al., 2008; Yuan
+176 et al., 2016;19 Tighiouart and Rogatko, 2010). Although identifying the MTD has been the
+177 traditional paradigm for oncology drug development, for modern targeted therapies, such as
+178 kinase inhibitors and antibodies, identifying optimized dosage(s) based on alternative approaches
+179 may be more appropriate than selecting the MTD for further development.20 Bayesian designs
+180 with the aim of identifying such dosages have been proposed for early-phase trials in oncology
+181 (Thall and Cook, 2004; Lin et al. 2020).
+182
+183
+184 IV. SUCCESS CRITERIA AND OPERATING CHARACTERISTICS
+185
+186 A. Success Criteria: Definition and Role in Regulatory Decision-making
+187
+188 Clinical trial design includes pre-specification of criteria for determining whether the primary
+189 objectives of the trial have been met. In clinical trials intended to support the effectiveness and
+16 Additional discussion on the use of shrinkage estimation and BHMs for subgroup analysis, and additional details
+on the BHM model and results in the liraglutide trial, can be found in an FDA impact story:
+(https://www.fda.gov/drugs/regulatory-science-action/impact-story-using-innovative-statistical-approaches-provide-
+most-reliable-treatment-outcomes).
+17 Drug Trials Snapshots: RINVOQ Accessed August 29, 2024 (https://www.fda.gov/drugs/drug-approvals-and-
+databases/drug-trials-snapshots-rinvoq).
+18 See FDA guidance for industry Optimizing the Dosage of Human Prescription Drugs and Biological Products for
+the Treatment of Oncologic Diseases (August 2024).
+19 The BOIN design has received the fit-for-purpose designation for phase 1 dose-finding cancer trials:
+(https://www.fda.gov/media/155363/download).
+20 See footnote 17.
+5
+
+--- Page 10 ---
+Contains Nonbinding Recommendations
+Draft — Not for Implementation
+190 safety of drugs, success criteria of this type are useful as a goal to shape other design
+191 characteristics, such as sample size and power. Such criteria serve as a point of discussion
+192 between FDA and a sponsor on whether trial results could contribute to substantial evidence of
+193 effectiveness. Carefully chosen success criteria are important to trial interpretability and
+194 efficiency.
+195
+196 In clinical trials intended to support effectiveness and safety that are conducted with an overall
+197 frequentist statistical analysis plan, the efficacy success criteria are almost always chosen in such
+198 a way that the familywise Type I error rate (FWER) across all primary and secondary estimands
+199 is no greater than 0.025, one-sided. In the case of a trial with a single primary estimand, this
+200 means performing a statistical hypothesis test at a one-sided significance level of 0.025. For trials
+201 with multiple primary and/or secondary endpoints, the criteria can become more complex.21
+202
+203 In clinical trials with Bayesian inference for the primary estimand, this default success criterion
+204 may not be applicable or appropriate, such as in the case where there is borrowing of information
+205 (see Sections V.D and V.E), so careful specification of alternative success criteria is often critical
+206 when using Bayesian analyses. For these Bayesian approaches, specification of a success
+207 criterion is most often based on the posterior probability that the true treatment effect size
+208 exceeds some threshold. In mathematical notation, such a criterion might take the form Pr(d > a)
+209 > c, where d is a population-level summary of the size of the treatment effect, a is a minimum
+210 threshold for the treatment effect to be considered beneficial, and c is a minimum probability
+211 level that would support a conclusion of effectiveness. (In some cases, the criterion may be Pr(d
+212 < a) > c instead, if lower values of d reflect greater benefit.) Choice of a success criterion of this
+213 kind thus means choice of specific values for a and for c. There are a variety of approaches to
+214 specifying these thresholds for Bayesian analyses. The choice of which approach to use depends
+215 on the trial objectives and specific Bayesian methods used.
+216
+217 1. Calibration to Type I Error Rate
+218
+219 For some Bayesian approaches, a and c can be chosen such that the overall FWER is controlled
+220 at a given level, typically 0.025 one-sided. This is referred to as calibrating the success criteria to
+221 Type I error rate. Such an approach may be appropriate for designs where Bayesian approaches
+222 are used not to synthesize multiple information sources, but instead to facilitate complex
+223 adaptive designs. Calibration to Type I error rate also may be useful in designs with
+224 noninformative prior distributions that express a lack of prior information relevant to the
+225 analysis.
+226
+227 When calibrating Bayesian success criteria to Type I error rate, a is chosen to be 0 for superiority
+228 designs or is based on the non-inferiority margin, m, for non-inferiority designs. Determining the
+229 appropriate choice of c to control FWER then becomes a computational problem only. For the
+230 simplest Bayesian approaches, including some designs with noninformative and/or conjugate
+231 prior distributions, c can be derived algebraically. For more complicated designs, including
+232 complex adaptive designs, c is instead approximated using clinical trial simulations.22
+233
+21 See FDA guidance for industry Multiple Endpoints in Clinical Trials (October 2022).
+22 See FDA guidance for industry Adaptive Designs for Clinical Trials of Drugs and Biologics (December 2019).
+6
+
+--- Page 11 ---
+Contains Nonbinding Recommendations
+Draft — Not for Implementation
+234 2. Direct Interpretation of Posterior Probability
+235
+236 In Bayesian approaches where the prior distribution has been chosen to provide an accurate
+237 summary of the state of belief based on existing information before the trial begins, decision-
+238 making can be based on direct interpretation of the posterior probability distribution itself. With
+239 a prior chosen in this way, if the posterior probability Pr(d > a) = c then the probability that the
+240 treatment effect is less than a is less than 1 – c. For example, if the posterior probability of
+241 effectiveness is 0.98, the posterior probability that the treatment is ineffective is 0.02. The choice
+242 of success criteria can then be based on a determination of whether a 1 – c chance of
+243 ineffectiveness is sufficiently small in the specific context.
+244
+245 This approach can be appropriate in Bayesian analyses that explicitly leverage external data
+246 sources to support decision-making, though it is not limited to that setting. In such scenarios, it is
+247 critical that the prior be specified in a way that accurately and comprehensively reflects the
+248 external data to ensure credible conclusions.
+249
+250 3. Success Criteria Based on Benefit-Risk Assessment or Decision-Theoretic
+251 Approaches
+252
+253 Another general approach specifies success thresholds in a broader context incorporating product
+254 risk or additional considerations. The simplest form of such an approach would adopt a choice
+255 for the threshold a that ensures sufficient benefit to outweigh known or potential product risks.
+256
+257 More complex approaches might include consideration of external factors such as seriousness of
+258 a disease or availability of other approved therapies. A decision-theoretic approach might include
+259 assessment of the potential negative consequences of approving an ineffective drug or of not
+260 approving an effective drug. The statistical quantification of such negative consequences is
+261 sometimes referred to as “loss.” One approach to incorporating such information is to form
+262 success criteria that minimize the expected loss. The loss function can include safety as well as
+263 effectiveness considerations to incorporate benefit-risk assessment into the formal decision-
+264 making process.
+265
+266 4. Additional Considerations
+267
+268 In trials that include interim decision-making, such as group sequential designs, success criteria
+269 should be specified for each decision point. In cases where success criteria are calibrated to Type
+270 I error rate, interim success criteria can be specified to ensure overall control of FWER across all
+271 decision-points for effectiveness.
+272
+273 Success criteria should be specified for all primary and key secondary endpoints that use
+274 Bayesian approaches. In those trials with success criteria calibrated to Type I error rate, clinical
+275 trial simulations may be required to ensure control of FWER across all endpoints. Sample size
+276 can be calculated to achieve the desired statistical power under the controlled FWER.
+277
+278
+7
+
+--- Page 12 ---
+Contains Nonbinding Recommendations
+Draft — Not for Implementation
+279 B. Operating Characteristics
+280
+281 In the design of a clinical trial, it is important to understand how the trial is likely to perform in
+282 terms of supporting correct conclusions and reliable estimation of treatment effects. In trials with
+283 frequentist inference, the most important operating characteristics related to hypothesis tests
+284 (long-run expectations of trial conclusions under assumptions about true parameter values) are
+285 the FWER and the power for the primary and other key endpoints. These quantities are fixed by
+286 design before the trial (conventionally, at 0.025 one-sided FWER and 80% or 90% power). This
+287 is possible because frequentist inference is based on the conditional probability of observing
+288 certain data given fixed assumptions about parameter values, and these probabilities can be
+289 calculated pre-test. The most important operating characteristics related to estimation in the
+290 frequentist paradigm are bias and mean squared error (MSE) of point estimates, and coverage
+291 probability and width of confidence intervals.
+292
+293 The situation is somewhat different in trials with Bayesian inference because Bayesian inference
+294 is based on the posterior distribution. Operating characteristics of the design and analysis
+295 therefore depend on both the prior distribution and the observed data. It is also important to note
+296 that the concept of a false positive conclusion in a Bayesian framework is conditional on a
+297 positive conclusion and not, as in the frequentist framework, on a true null hypothesis.
+298
+299 Some trials, including certain complex adaptive design trials, employ Bayesian analysis in an
+300 overall frequentist inferential framework (i.e., with calibration to Type I error rate control). In
+301 these cases, frequentist operating characteristics are of interest. Other trials, including most trials
+302 in which external information is incorporated into an informative prior distribution, use a
+303 Bayesian inferential framework that calls for a different approach to quantifying design
+304 characteristics. These two cases are discussed in the next two subsections.
+305
+306 1. Trials Calibrated to Type I Error Rate
+307
+308 For trial designs that calibrate Bayesian results to Type I error rate, the primary operating
+309 characteristics are the same as those described above for trials with frequentist inference (that is,
+310 Type I error rate and power for testing; bias and MSE of point estimates, and coverage
+311 probability and width of intervals, for estimation). Clinical trial simulations are generally used to
+312 estimate or demonstrate control of operating characteristics. Briefly, a large number of simulated
+313 trials, conditional on a chosen prior distribution and sample size, are generated under the
+314 assumption that the null hypothesis is true or that an alternative hypothesis is true. The
+315 proportions of simulated trials in which the null hypothesis is rejected is then used to estimate
+316 Type I error rate and power, respectively. An iterative simulation process is often used in which
+317 various sample sizes, prior distributions, success criteria, and other design elements (e.g., interim
+318 analysis boundaries) are adjusted to obtain desired operating characteristics. Simulations should
+319 comprehensively cover the plausible range of assumptions. This includes assumptions about
+320 statistical parameters such as the variance or background rate of the endpoint or operational
+321 parameters such as the accrual rate.23
+322
+23 For additional considerations on these and other aspects of simulations, see Section VI.A of the FDA guidance for
+industry Adaptive Designs for Clinical Trials of Drugs and Biologics (December 2019).
+8
+
+--- Page 13 ---
+Contains Nonbinding Recommendations
+Draft — Not for Implementation
+323 2. Trials Not Calibrated to Type I Error Rate
+324
+325 In cases where a sponsor and FDA agree that a study design does not need to be calibrated to the
+326 Type I error rate, the accuracy of conclusions depends strongly on the choice of prior
+327 distribution, as well as many of the same features required in frequentist inference: an adequately
+328 fitting data model, an appropriate experimental design, and accurate measurements. Accordingly,
+329 design characteristics are calculated in reference to the prior distribution. For example, Bayesian
+330 power is the probability of meeting the success criterion, averaged over a prior distribution
+331 (Spiegelhalter et al., 2004). The sample size of a trial is chosen to achieve a desired Bayesian
+332 power conditional on a chosen prior distribution and other study design features. Another
+333 relevant operating characteristic is the probability of a correct decision (akin to calculating the
+334 positive predictive value for a diagnostic test) corresponding to a chosen prior. For example,
+335 simulations can be used to calculate the proportion of trials where a positive treatment effect was
+336 present, from among those trials that concluded effectiveness. For estimation of treatment
+337 effects, relevant operating characteristics include the expected bias and expected MSE of point
+338 estimates averaged across a prior. Similarly, the expected coverage probability or width of the
+339 corresponding credible interval can be assessed (Adcock, 1988; Joseph and Bélisle, 1997).
+340
+341 It is always critical for Bayesian analyses to have a prespecified prior, which is typically called
+342 the analysis prior. In a hypothetical situation where the choice of a prior distribution was
+343 unambiguous and clear, Bayesian power and other quantities could be calculated in reference to
+344 the same prior distribution that will be used in the final study analysis. In practice, however,
+345 there will usually be a range of plausible design priors (sometimes referred to as sampling
+346 priors), separate from the analysis prior, that are used as the basis for calculating study design
+347 characteristics. In simulation studies, the design prior serves as the prior from which parameter
+348 values are drawn, whereas the analysis prior is the prior that is used in the subsequent analysis of
+349 the data generated. An example of a design prior is a prior distribution on the treatment effect
+350 centered around the minimum clinically important difference (MCID) to evaluate Bayesian
+351 power. When the design prior is intended to explore scenarios corresponding only to an
+352 efficacious treatment, the design prior might be limited to an interval or a point mass indicating
+353 that the treatment is effective. Design priors that explore pessimistic assumptions about treatment
+354 effect should also be considered.
+355
+356 Operating characteristics can be calculated under various plausible design priors. Differences in
+357 design characteristics corresponding to different design priors can be used to quantify the
+358 sensitivity of the design to the choice of prior or to demonstrate that the probability of making an
+359 incorrect decision is very low even when the design and analysis priors do not match. In general,
+360 trial characteristics will be more sensitive to the analysis prior when the sample size is small or
+361 when there is an early interim analysis that makes the sample size effectively small.
+362
+363 3. Additional Considerations
+364
+365 The operating characteristics discussed above are typically provided for key objectives of a
+366 clinical trial. For any trial and within any development program, there are often multiple other
+367 objectives for which data collection is essential. For example, it is essential to generate evidence
+9
+
+--- Page 14 ---
+Contains Nonbinding Recommendations
+Draft — Not for Implementation
+368 regarding the safety and tolerability of a product. These other objectives should be considered in
+369 the overall trial design and drug development program.
+370
+371
+372 V. PRIOR DISTRIBUTIONS
+373
+374 A. Overview and General Principles
+375
+376 Use of a prior distribution is the main feature distinguishing Bayesian from frequentist
+377 approaches. Priors allow the analysis to reflect the available information in the particular
+378 situation, whether positive, negative, or neutral. With any Bayesian analysis, the prior
+379 construction process should be designed, implemented, and documented in a systematic and
+380 transparent manner. Sponsors should pre-specify and justify the full details of the proposed prior
+381 distribution in the protocol. This justification should address the appropriateness of the prior
+382 distribution’s influence and the operating characteristics of the design, given the proposed prior.
+383 An important distinction is between informative prior distributions that borrow external
+384 information into the analysis of the current trial, and noninformative or minimally informative
+385 prior distributions that express a stance of general uncertainty. The complexity of the prior
+386 construction process will depend on whether an informative prior is used, and on the sources of
+387 external information being considered. Informative priors will generally need a greater amount
+388 of justification (see Section V.D for details). The following sections provide guidance for these
+389 different types of prior distributions and for other aspects of prior distribution evaluation and
+390 selection.
+391
+392 B. Noninformative and Minimally Informative Priors
+393
+394 Noninformative and minimally informative priors are typically specified to reflect a stance of
+395 general uncertainty regarding the parameters to be estimated. A noninformative prior is designed
+396 to use no external information. There are a variety of approaches that aim to reflect such lack of
+397 information, and no single approach is universally preferred to others. A minimally informative
+398 prior distribution could be based on general information about a trial and the possible outcomes,
+399 such as the plausible magnitudes of change in the endpoints of interest and available information
+400 about the variability in previous studies. Noninformative and minimally informative priors are
+401 often used in cases where there is no relevant prior information. In many situations, priors that
+402 fall into these classes will tend to be overwhelmed by the observed data and therefore have
+403 minimal effect on the results such that the final conclusions are dominated by the observed data.
+404 In other situations, the available data may not provide much information for a particular
+405 parameter and so using a noninformative or minimally informative prior for the parameter may
+406 place weight on parameter values we know to be unlikely and may have a large effect on the
+407 estimates (for example, see Gelman, 2006). The properties of a particular prior can typically be
+408 determined using appropriate simulations during study design.
+409
+410 As with any prior distribution, a noninformative or minimally informative prior may not be
+411 invariant to parameter transformation, such that the induced distribution on such a transformation
+412 reflects an unintended understanding about the transformed parameter of interest. Care should be
+413 taken to understand such induced prior distributions during study design.
+10
+
+--- Page 15 ---
+Contains Nonbinding Recommendations
+Draft — Not for Implementation
+414
+415 Noninformative and minimally informative priors can also play important roles in assessing the
+416 influence of informative prior distributions on the analysis. Such priors are often used in the
+417 calculation of effective sample size (see Section V.E) as a reference scale against which to
+418 measure the influence of another prior. In addition, when an informative prior is specified in the
+419 primary analysis, an analysis using a noninformative or minimally informative prior is often
+420 helpful in understanding the sensitivity of the results to the choice of prior.
+421
+422 C. Skeptical Priors
+423
+424 Skeptical priors express skepticism about the presence of very large treatment effects. One
+425 scenario where they may be appropriate is when there is prevailing information indicating the
+426 need to be more cautious than usual on drawing conclusions in favor of benefit. For example, if
+427 there have been a number of failed trials or drug development programs for closely related drugs
+428 in a therapeutic area, it would be natural to be skeptical about the potential for benefit with
+429 another similar trial or drug. Another possible scenario is in the evaluation of a new drug that is
+430 not likely to offer more than incremental improvement over an existing therapy. In this setting, it
+431 would be natural to be skeptical of a dramatic improvement over the existing therapy, and a
+432 skeptical prior could be used in the analysis. Such approaches have not been standard practice in
+433 drug development but could be considered in relevant circumstances such as those described
+434 above.
+435
+436 Skeptical priors may also be considered in trials with an adaptive design. In designs where there
+437 is a desire to calibrate to Type I error rate, skeptical priors can be used as an alternative to
+438 modification of the decision rule to maintain the desired error rate as the skepticism will
+439 counterbalance early random highs or lows and hence early stopping requires even greater early
+440 evidence of benefit. Enthusiastic priors (priors containing some degree of positive belief) can be
+441 used in a similar way to control early stopping for futility.
+442
+443 D. Informative Priors to Borrow External Information
+444
+445 1. General Recommendations
+446
+447 When proposing to use an informative prior that borrows external information for inference on
+448 the primary estimand, sponsors should provide strong justification that considers feasibility (e.g.,
+449 of alternative approaches that do not involve borrowing) and the relevance of the available
+450 information. Areas where informative priors have been most often proposed include pediatrics
+451 and rare diseases. Additional areas can be considered on a case-by-case basis, and FDA advises
+452 early discussion of such proposals with the Agency.24 The specific sources of information to be
+453 used in the informative prior and the degree of reliance on the information should be justified.
+454 The justification should include discussion of the influence of the prior and how it relates to the
+455 relevance of the borrowed data for the current trial, the sufficiency of the amount of prospective
+456 trial data that will be collected (e.g., for evaluating safety and benefit-risk), and the
+457 appropriateness of trial operating characteristics. In some cases, it can be advantageous to
+24 See FDA Guidance for Industry Interacting with the FDA on Complex Innovative Trial Designs for Drugs and
+Biological Products (December 2020).
+11
+
+--- Page 16 ---
+Contains Nonbinding Recommendations
+Draft — Not for Implementation
+458 determine the details of the borrowing method while still blinded to the results of the trials that
+459 will be borrowed. The time needed for FDA and the sponsor to align on an appropriate prior
+460 should be considered in the development of the intended trial.
+461
+462 It is important to consider the possibility of prior-data conflict, defined as the scenario in which
+463 the data observed are notably inconsistent with the prior distribution. More formally, prior-data
+464 conflict occurs when the prior distribution places its mass “primarily on distributions in the
+465 sampling model for which the observed data is surprising (Evans and Moshonov 2006, p 894).”
+466 The potential impact of prior-data conflict on the interpretability of trial results should be
+467 explored in simulations at the study design stage by varying the size of the assumed treatment
+468 effect over a sufficiently broad range of scenarios that cover plausible degrees of conflict,
+469 including no effect in the target population. The outcome of these simulations should be
+470 considered carefully and discussed in the justification of the prior, and appropriate sensitivity
+471 analyses (see Section V.F) should be planned.
+472
+473 Prior construction, including making decisions on how much to borrow, is a multidisciplinary
+474 process that requires quantifying the degree of uncertainty in the relevance of the external
+475 information to the question of interest. Understanding relevance requires domain knowledge,
+476 while quantifying uncertainty and selecting appropriate statistical methodology requires
+477 thorough statistical evaluation. Close collaboration between disciplines throughout the process is
+478 essential.
+479
+480 2. Identification and Review of Available External Information
+481
+482 In general, the process of determining a prior should begin with the identification and review of
+483 all the available relevant external information. Possible sources of information may include
+484 relevant pharmacokinetic, pharmacodynamic, and clinical data (e.g., from previous trials or
+485 systematic reviews of trials evaluating the drug in the same or other related conditions), as well
+486 as nonclinical data, real-world data, and professional or expert guidelines or consensus opinions.
+487 Several factors should be considered in evaluating whether and how much to leverage external
+488 information to ensure that conclusions relying on such information are valid, reliable, and
+489 interpretable, such as:
+490
+491 • Data quality and reliability: The quality and reliability of information used to construct
+492 the prior should be adequate for the type of regulatory decision informed by the analysis.
+493 Data from clinical trials designed to support regulatory decisions will typically meet this
+494 bar, but other sources may require additional effort to ensure adequate quality and
+495 reliability. For real-world data, FDA has issued guidance25,26,27 that discusses the
+496 processes and procedures that help ensure quality of the data. Other sources may be
+497 necessary in some circumstances, and in these cases comparable steps should be taken to
+498 ensure the quality and reliability of the information.
+25 See FDA guidance for industry Real-World Data: Assessing Registries to Support Regulatory Decision-Making
+for Drug and Biological Products (December 2023).
+26 See FDA guidance for industry Use of Electronic Health Record Data in Clinical Investigations (July 2018).
+27 See FDA guidance for industry Real-World Data: Assessing Electronic Health Records and Medical Claims Data
+to Support Regulatory Decision-Making for Drug and Biological Products (July 2024).
+12
+
+--- Page 17 ---
+Contains Nonbinding Recommendations
+Draft — Not for Implementation
+499 • Pre-specification: Statistical methods should be prespecified to minimize bias. Similarly,
+500 sponsors should pre-specify the construction process for the prior, including for the
+501 selection of sources for the same reason. As with any evidence synthesis approach, the
+502 standards for inclusion and the intended scope of use of the various sources for the prior
+503 should be predefined before starting a systematic search to identify specific sources.
+504
+505 • Relevance: The information being leveraged should be relevant to the applicable
+506 regulatory question. When multiple information sources are used, not all information may
+507 be equally relevant. It is important to consider and discuss any planned approaches to
+508 reflect the different degrees of relevance. Factors that may influence relevance include:
+509
+510  Similarity in estimand attributes such as the population (e.g., inclusion or
+511 exclusion criteria), endpoint, treatment conditions, or handling of intercurrent
+512 events
+513
+514  Any differences in measurement or assessment (e.g., of the endpoint)
+515
+516  Recency of data
+517
+518  Any potentially important changes (e.g., in aspects of standard of care such as
+519 concomitant medications) over time
+520
+521 • The design of studies providing the information: Borrowing of information based on
+522 randomized controlled comparisons typically relies on fewer and more plausible
+523 assumptions28 than borrowing of information based on non-randomized comparisons or
+524 on a single treatment condition (e.g., historical control data).
+525
+526 • The availability of patient-level data: Typically, information should come from patient-
+527 level data as this allows for a thorough evaluation of the relevance of the external data
+528 and the potential to adjust for relevant covariates in the analysis, which is particularly
+529 important when inclusion and exclusion criteria are not fully aligned.
+530
+531 3. Prior Construction
+532
+533 After identification and review of the available external information sources, sponsors should
+534 decide how to use the relevant information sources. A thorough evaluation of all relevant sources
+535 and evidence for informing the prior should be completed, including evidence that may suggest
+536 skepticism of the existence or magnitude of a treatment effect. This evaluation should include a
+537 prespecified list of criteria and discussion of steps taken to ensure information was not
+538 selectively obtained or used to ensure that preferential selection of favorable studies (or the most
+539 favorable studies) did not occur. If multiple information sources will be leveraged, an evidence
+540 synthesis process should be pre-specified and employed to obtain the most plausible estimate of
+28 When borrowing information based on randomized controlled comparisons, it is still important to evaluate the
+potential impact of differences in effect modifiers between information sources.
+13
+
+--- Page 18 ---
+Contains Nonbinding Recommendations
+Draft — Not for Implementation
+541 the responses. Typical best practices for evidence synthesis in systematic reviews and meta-
+542 analyses, such as pre-specification of data collection processes, study inclusion or exclusion
+543 criteria, and synthesis methods, are relevant here.29
+544
+545 The modeling approach for constructing the prior will depend on several factors, including the
+546 similarity between the various data sources, the relative amount of information each source
+547 contains, and the relationships between the data sources. As the data sources increase in variety
+548 and the relationships becomes more varied, the necessary modeling approach becomes more
+549 complex. For example, suppose a sponsor is designing a pediatric study that will use an FDA-
+550 approved drug as an active control. For the investigational drug, there is available data from
+551 completed adult studies, whereas for the drug used as the active control there are pediatric as
+552 well as adult data. In this situation, not all data sources would be equally relevant since the adult
+553 data would be less relevant than the pediatric data and so a modeling approach that reflects this
+554 belief would be preferable. Modeling approaches can also be used to increase the relevance of
+555 the prior data (compared to taking the raw results from the previous studies) by adjusting
+556 estimates based on covariates or by selecting a subset of the data that more closely aligns with
+557 the question of interest. For example, the multiple sclerosis trial discussed in Section III.B
+558 modeled the relationship between age and the annualized relapse rate to improve the relevance of
+559 the data from the adult trials.
+560
+561 Typically, multiple sources of information and many assumptions30 underlie a particular prior,
+562 and it is crucial to ensure that these are documented in the protocol with a discussion of the
+563 supporting evidence for each assumption to facilitate FDA’s review. For example, in some cases
+564 it may be reasonable to assume that all data sources are equally relevant. A typical example of an
+565 assumption of equal relevance would be in a primary analysis in which all patients who are
+566 enrolled in a single clinical trial are analyzed simultaneously without any regard for possible
+567 subgroups. An example of where this assumption should be considered more closely is when
+568 pediatric patients (most commonly adolescents) are included in a single trial with adults. The
+569 appropriateness of an assumption of equally relevant data from adults and adolescents would be
+570 informed by the specific extrapolation concept and plan,31 and the most appropriate type of
+571 relationship should be justified and discussed with the Agency.
+572
+573 In other cases, models that include exchangeability may be reasonable. The outcomes of a group
+574 of participants are considered exchangeable in a setting where if the values of the outcomes are
+575 revealed, but their labels are not, then the values are not helpful in predicting their labels. When
+576 the outcomes of a group of participants are exchangeable then all possible ordering of the
+577 outcomes are equally likely prior to observing the values for the outcomes. Statistical models
+578 routinely assume that the outcomes of participants within a treatment group are exchangeable or
+579 assume that the residuals are exchangeable. Outcomes modeled as independently drawn from the
+580 same distribution are exchangeable. Outcomes modeled as random draws without replacement
+29 See FDA draft guidance for industry Meta-Analyses of Randomized Controlled Clinical Trials to Evaluate the
+Safety of Human Drugs or Biological Products (November 2018). When final, this guidance will represent the
+FDA’s current thinking on this topic.
+30 In this discussion, we use the taxonomy of the types of assumed relationships between data sources from
+Spiegelhalter, David J., Keith R. Abrams, and Jonathan P. Myles. Bayesian approaches to clinical trials and health-
+care evaluation. Vol. 13. John Wiley & Sons, 2004.
+31 See the ICH guidance for industry E11A Pediatric Extrapolation (December 2024).
+14
+
+--- Page 19 ---
+Contains Nonbinding Recommendations
+Draft — Not for Implementation
+581 from a set of possible values are also exchangeable. There are also other conditions that imply
+582 exchangeable outcomes (Yuan and Chai, 2008).
+583
+584 One setting where exchangeability may be considered is in the estimation of treatment effects
+585 within subgroups of a population (i.e., subgroup analysis). An assumption of exchangeability
+586 may be reasonable if there are no a priori expectations regarding effect modification by the
+587 subgroup factor. However, exchangeability of subgroup treatment effects is not always an
+588 appropriate choice. For example, if a drug is expected to be more effective in a subgroup of
+589 cancer patients who exhibit the molecular target than the complementary subgroup of patients
+590 without that target, the two possible orderings of treatment effects with the subgroups would not
+591 be equally likely. In some cases where exchangeability of subgroup treatment effects is not
+592 appropriate, all known effect modifiers can be included in the model as effect modifiers (e.g., as
+593 interaction effects with treatment when modeling individual observations). It then may be
+594 appropriate to regard the residual subgroup treatment effects as exchangeable.
+595
+596 There are settings where other potential assumptions may be reasonable. For example, there may
+597 be cases where it is reasonable to model the relationship between the source and prospective trial
+598 data using an assumed bias parameter in the model. This approach, which would allow
+599 borrowing of information on the precision while allowing for differences in the treatment effect,
+600 might be considered if there is reliable evidence of the magnitude of the bias or suspicion of a
+601 bias.
+602
+603 In other cases, it may be reasonable to use a model with a functional dependence assumption that
+604 predicts the distribution of responses using some function based on systematic predictable
+605 processes. For example, suppose two distinct populations were studied in two different trials. If a
+606 third trial was conducted that included both populations, it may be reasonable to construct the
+607 prior expectation for the effect in this trial using a combination of the results from the two
+608 previous trials while adjusting this expectation based on the relative sizes of the populations in
+609 the prospective trial. This type of assumption can be seen in some pediatric extrapolation settings
+610 where attempts are made to adjust for expected differences between adult and pediatric patients.
+611 For example, in the development programs for empagliflozin32 and linagliptin,33 the sponsor
+612 constructed pharmacometric models based on the previously conducted studies combined with
+613 the relevant observed baseline values of the pediatric patients to predict response.
+614
+615 Finally, there is often a need to implement a discounting approach to reflect any residual
+616 uncertainty regarding the question of interest. For example, when using Bayesian methods to
+617 implement pediatric extrapolation, if the adult trial results were used to derive the prior without
+618 discounting, the evidence from the adults alone would already meet typically used success
+619 criteria and if a trial were conducted, the adult data would often overwhelm the pediatric data
+620 regardless of the results in the pediatric study. This would not be consistent with the uncertainty
+621 on the question of benefit in pediatric patients. Therefore, it will often be more reasonable to use
+622 a prior centered on a degree of benefit similar to what is observed in adults, but with a greater
+32 See FDA Clinical Review (https://www.fda.gov/media/172973/download); FDA Statistical Review
+(https://www.fda.gov/media/172972/download).
+33 See FDA Clinical Review (https://www.fda.gov/media/172628/download); FDA Statistical Review:
+https://www.fda.gov/media/172630/download).
+15
+
+--- Page 20 ---
+Contains Nonbinding Recommendations
+Draft — Not for Implementation
+623 degree of variability and hence uncertainty. Discounting is discussed in more detail in the next
+624 section.
+625
+626 4. Discounting
+627
+628 Many prior discounting approaches fall into one of two categories – either static discounting
+629 where the method borrows the same information regardless of the observed trial data or dynamic
+630 discounting (sometimes called adaptive discounting) where the amount that is borrowed is
+631 determined by some measure of the similarity of the data, such as the difference between the
+632 observed and prior means. Static discounting methods tend to be easy to design and implement,
+633 as there are fewer decisions to be made, while dynamic discounting methods can provide
+634 protection against prior-data conflict because they borrow less when the data are less similar and
+635 more when the data are more similar. Dynamic approaches are used in many cases due to the
+636 more advantageous operating characteristics, such as with respect to bias and MSE, resulting
+637 from the lesser borrowing in cases of prior-data conflict. The challenge with dynamic
+638 discounting methods is that they introduce more parameters that need to be specified, for
+639 example, the similarity measure to be used and the rate at which borrowing declines based on
+640 this similarity measure.
+641
+642 There are many specific methods proposed in the scientific literature for implementing
+643 discounting. With any approach, the goal should be to identify parameter values that correspond
+644 to a reasonable degree of borrowing. What is reasonable will depend on the situation and the
+645 relevance of the borrowed data. A prior that is too informative risks overwhelming the data
+646 collected in the target population, regardless of what is observed. Leveraging too little
+647 information means not taking advantage of the available data and more information will be
+648 required in the target population, making the trial less efficient. Hence, finding the appropriate
+649 balance in the informativeness of the prior is crucial. Model parameter values that determine the
+650 degree of discounting and their interpretation depend on the method being used and may not
+651 always be easily compared across models. Hence, it is often useful to use more interpretable
+652 metrics (such as those discussed in Section V.D).
+653
+654 In some cases, it may be helpful to conduct a formal expert elicitation exercise (O’ Hagan et al.,
+655 2006) with subject matter experts to incorporate the degree of consensus in the level of
+656 borrowing. It is important to consult with the Agency on the scope and utility of such an exercise
+657 before conducting it, and to prespecify the approach for elicitation.
+658
+659 The following paragraphs discuss considerations for the use of a few different methods for
+660 discounting but are not intended to provide an exhaustive list of methods. Applicability of a
+661 discounting method will be determined on a case-by-case basis and should be discussed with the
+662 Agency.
+663
+664 One approach uses power priors that are constructed by raising a prior distribution based on
+665 external data to a fixed power less than one, sometimes called a discounting factor. The
+666 discounting factor adjusts the relative informativeness of a single external subject’s data
+667 compared to a single current subject’s data. A discounting factor of 1 corresponds to equal
+668 weighting of external and prospective trial subjects, a discounting factor of 0 corresponds to no
+16
+
+--- Page 21 ---
+Contains Nonbinding Recommendations
+Draft — Not for Implementation
+669 borrowing of external information, and discounting factors in between correspond to borrowing
+670 with each external subject contributing less information than each trial subject. Once the
+671 discounting factor is chosen, the degree of borrowing is fixed, making this a static borrowing
+672 approach. Advantages of the power prior approach include simple implementation and a
+673 seemingly intuitive approach to discounting. A disadvantage is that it is static and therefore may
+674 have worse operating characteristics than dynamic approaches.
+675
+676 Although the basic power prior approach is a static borrowing approach, there are extensions
+677 proposed in the literature such as commensurate priors and supervised power priors which make
+678 the degree of borrowing dependent on different measures of the similarity between the observed
+679 and prior data. As the difference between the observed and prior means grows larger, less
+680 information will be borrowed. These approaches can allow control of how fast the discounting
+681 occurs as the difference grows, and determining an appropriate rate is one of the main challenges
+682 in using this approach.
+683
+684 Using a mixture prior is another simple way to implement a dynamic borrowing approach. Two
+685 or more individual prior components are combined with prespecified weights, and the result is a
+686 prior distribution that will adaptively reflect the similarity between the individual components
+687 and the observed data. The chosen weights must sum to one and can be interpreted as the
+688 probability of applicability of the particular data source. For example, a mixture prior might be
+689 constructed by combining an informative component based on estimates obtained from previous
+690 trial data with a noninformative component. The degree to which the resulting posterior will
+691 borrow the previous trial data will depend on the degree of similarity between the observed and
+692 previous data. The main difficulty is determining the level of weighting for informative
+693 components and hence the strength of borrowing. The advantages of this approach are simple
+694 programming implementation and well-developed methods for estimating the degree of
+695 borrowing.
+696
+697 Other discounting approaches include Bayesian hierarchical models and elastic priors. Bayesian
+698 hierarchical models are the main method used to implement exchangeable models. They induce
+699 borrowing by assuming that the parameters for various groups are at some level drawn from a
+700 common distribution. For example, in a basket trial evaluating a drug in multiple related
+701 diseases, a possible starting point for the modeling process might be that the treatment effects for
+702 the diseases are a random sample drawn from a single common distribution. Elastic priors (Jiang
+703 et al., 2023) are implemented in two steps. First, a measure of the degree of similarity called a
+704 congruence measure is used to quantify the strength of similarity between the external and
+705 current data. Then a function called an elastic function is used to map the congruence measure to
+706 a degree of borrowing. Like the power prior approach, the degree of borrowing takes values
+707 between 0 (no borrowing) and 1 (full borrowing). Elastic priors are flexible methods as they can
+708 use any of an extremely broad range of different functions to implement discounting that adapts
+709 as fast or as slow as desired based on the level of observed conflict between the prior and current
+710 data. However, this flexibility may make it harder to justify a particular choice of function.
+711
+712
+713
+17
+
+--- Page 22 ---
+Contains Nonbinding Recommendations
+Draft — Not for Implementation
+714 E. Quantifying the influence of the prior distribution
+715
+716 The influence of a prior distribution should be discussed and documented. The influence can be
+717 measured in multiple ways using different metrics. Metrics that have been used in the regulatory
+718 setting include:
+719
+720 • The estimated treatment effect/difference or parameter(s) of interest based solely on the
+721 prior distribution. This is usually the mean of the prior distribution.
+722
+723 • Effective sample size (ESS): a measure of the information in a probability distribution in
+724 terms of the equivalent number of patients in the target population. For example, when
+725 applied to the prior alone we would call it the prior ESS. Note that this number may be
+726 larger than the sample size from the source population if there is a larger amount of
+727 variability in the target population than the reference population. Multiple methods that
+728 rely on different summary measures have been proposed for the ESS (Malec, 2001;
+729 Morita et al., 2008; Neuenschwander et al, 2020). In general, it is important to quantify
+730 and summarize the ESS for the entire plausible range of outcomes while also presenting
+731 relevant summary statistics such as the maximum and mean ESS.
+732
+733 These metrics are helpful to compare candidate priors. When an informative prior is used, values
+734 of these metrics should be compared to values obtained when using noninformative or minimally
+735 informative priors (or other relevant priors) to understand the effect of the informative prior.
+736 These metrics may be more easily understood than prior parameter values that depend on the
+737 specific model being used.
+738
+739 It can also be helpful to consider extensions of these metrics. For example, one might determine
+740 the ratio of the prior effective sample size to the intended prospective trial size or to the total
+741 amount of information (prior effective sample size plus prospective trial size) to measure the
+742 relative amount of information borrowed in an analysis. If a dynamic prior is used, then the
+743 effective sample size contribution of the prior will change as information is accrued and so it is
+744 important to reassess this measure following completion of the trial. After data are collected,
+745 additional measures regarding the prior’s impact may be useful. Examples include measures of
+746 the conflict between the prior and the observed data and updated measures quantifying the
+747 strength of borrowing.
+748
+749 In some cases, the type I error rate has been proposed as a way to measure the degree of
+750 information in the informative prior. Borrowing information in an analysis will typically lead to
+751 an inflation in the Type I error rate compared to the nominal value (most often, a one-sided level
+752 of 0.025) used in the absence of borrowing. This degree of inflation has been proposed as one
+753 way of measuring the influence of a prior (Pennello and Thompson, 2007). However, there are
+754 multiple issues that make this method a poor way of measuring the degree of borrowing, and
+755 therefore it is not recommended for this purpose. First, by borrowing information, one is
+756 assuming that the borrowed information is relevant. Evaluating the degree of borrowing based on
+757 the expected outcome when there is no effect is philosophically inconsistent given a prior which
+758 assumes a non-zero effect. Second, dynamic methods lessen the impact of borrowing when
+759 effects that are smaller and close to the null value are observed. Consequently, borrowing will be
+18
+
+--- Page 23 ---
+Contains Nonbinding Recommendations
+Draft — Not for Implementation
+760 low when the observed data are incompatible with the prior, mitigating any potential increase in
+761 Type I error rate. Hence, the Type I error rate alone will not provide a complete assessment of
+762 the influence of the prior.
+763
+764 F. Sensitivity analyses
+765
+766 A necessary part of statistical inference in clinical trials is evaluating the sensitivity of the results
+767 and conclusions to plausible deviations from important analysis assumptions. In a Bayesian
+768 analysis, the choice of prior distribution is a critical assumption that can affect the results and
+769 conclusions, particularly when the prior distribution is informative and is associated with a large
+770 ESS. Therefore, sensitivity analyses should be planned that utilize a range of alternative
+771 reasonable choices for the prior distributions. For example, the amount or strength of borrowing
+772 could be varied (see Section IV.B on operating characteristics for additional examples).
+773 Comparing the results and conclusions (based on the respective posterior distributions) of such
+774 analyses can help one understand the sensitivity of the primary results and conclusions. Some
+775 approaches can build uncertainty about specific assumptions into the prior itself.
+776
+777
+778 VI. ESTIMANDS AND MISSING DATA IN A BAYESIAN SETTING
+779
+780 The general considerations related to estimands and missing data described in the International
+781 Council for Harmonisation of Technical Requirements for Pharmaceuticals for Human Use
+782 (ICH) E9 and E9(R1) guidances are relevant for a trial that uses Bayesian methods as with any
+783 other trial. These considerations include the importance of constructing a relevant primary
+784 estimand of interest that can be estimated with plausible assumptions, implementing design and
+785 conduct approaches to prevent missing data, pre-specifying an appropriate primary analysis
+786 approach (i.e., estimator), documenting missing data assumptions, and planning sensitivity
+787 analyses to evaluate robustness to violations in those assumptions. Bayesian methods can be used
+788 to address missing data in the primary analysis or in sensitivity analyses.
+789
+790 There are additional important considerations in trials that use Bayesian methods to borrow
+791 external information. In particular, it is critical to consider whether there are any differences in
+792 the estimands and estimators between the external information source (e.g., previous trial) and
+793 the prospective trial. Ideally, the same primary estimands and estimators should be used in
+794 analyzing both data sources. The properties of the parameter estimates depend on the approaches
+795 used, and lack of alignment in the approaches between the data sources can make the external
+796 data less relevant and affect considerations about the degree of borrowing. However, FDA
+797 recognizes that it may not be feasible or advisable to use the same approach in all situations.
+798
+799 In general, where there is a lack of alignment between the estimands or estimators, sponsors can
+800 consider reanalyzing the external data using the approach that is planned for the prospective trial.
+801 This will produce the most compatible estimates but may not be possible if patient-level data are
+802 inaccessible or if a particular estimand or estimator that will be used in the prospective trial relies
+803 on data that were not collected in the external data source (for example, patient outcome data
+804 after treatment discontinuation may be necessary for some approaches and are not always
+805 collected). Reanalyzing completed studies risks overfitting to observed random highs, thereby
+19
+
+--- Page 24 ---
+Contains Nonbinding Recommendations
+Draft — Not for Implementation
+806 introducing bias. Sponsors should have early discussions with the Agency about the planned
+807 estimands, estimators, and approaches for handling missing data in the analyses of external data
+808 that will be borrowed, and any differences relative to the approaches planned for the prospective
+809 trial data.
+810
+811
+812 VII. SOFTWARE AND COMPUTATION
+813
+814 When performing Bayesian inference, it is often necessary to rely on various approximate
+815 sampling algorithms to perform statistical inference. These sampling algorithms are implemented
+816 in a variety of general and specialized statistical software packages. These algorithms may also
+817 be implemented in specific situations using a variety of general programming languages. As
+818 stated in the Statistical Software Clarifying Statement,34 “FDA does not require use of any
+819 specific software for statistical analyses.” As noted in the statement and in ICH guidance E9
+820 Statistical Principles for Clinical Trials,35 “computer software used for data management and
+821 statistical analysis should be reliable, and documentation of appropriate software testing
+822 procedures should be available.”
+823
+824 When performing Bayesian analyses, it is critical to ensure that the sampling algorithm being
+825 employed is reliable for the specific model (Gelman et al., 2020). Bayesian methods are
+826 dependent on algorithms to approximate the posterior distribution and approximations can fail
+827 for a variety of reasons. For example, a Markov Chain Monte Carlo (MCMC) algorithm may not
+828 adequately sample from a particular part of the posterior distribution, or an approximation used
+829 in an algorithm may not be accurate. Hence it can be necessary, especially for more complex
+830 models, to evaluate the reliability and accuracy of Bayesian computation using simulations
+831 before final selection of the model. In cases where sampling or convergence issues are
+832 encountered, more detailed documentation of the reliability of the final selected model should be
+833 provided, e.g., in a simulation report, including a discussion of any steps taken to ensure better
+834 sampling or convergence. The documentation should include the range of scenarios evaluated
+835 and the code used to implement the model to allow verification of the sampling properties.
+836
+837
+838 VIII. DOCUMENTING AND REPORTING BAYESIAN ANALYSES
+839
+840 Clear documentation is necessary for FDA to review Bayesian proposals. The study design,
+841 estimands, and analyses should be pre-specified and justified in a protocol and consider
+842 applicable guidances.36 A clinical study report should describe the design, analysis, and results.
+843 As with non-Bayesian approaches, an assessment of parametric assumptions associated with the
+844 likelihood should be provided in the clinical study report using appropriate diagnostics. Details
+845 specific to Bayesian approaches are discussed below.
+34 See FDA Statistical Software Clarifying Statement (https://www.fda.gov/media/161196/download).
+35 See ICH guidance for industry E9 Statistical Principles for Clinical Trials (September 1998).
+36 For example, see the ICH guidances for industry E9 Statistical Principles for Clinical Trials (September 1998)
+and E9(R1) Statistical Principles for Clinical Trials: Addendum: Estimands and Sensitivity Analysis in Clinical
+Trials (May 2021), and the FDA guidance for industry Adaptive Designs for Clinical Trials of Drugs and Biologics
+(December 2019).
+20
+
+--- Page 25 ---
+Contains Nonbinding Recommendations
+Draft — Not for Implementation
+846
+847 A. Documenting Plans for Bayesian Analyses
+848
+849 The protocol should describe and justify the design and the planned statistical analysis methods.
+850 For Bayesian methods, this includes detailed information to support the proposed prior
+851 distribution and any external information borrowing, likelihood function, success criteria, and
+852 trial operating characteristics. Additional details or supporting information may be provided in
+853 additional documents such as a statistical analysis plan or simulation report. All relevant
+854 information should be submitted to FDA during the design stage and as early as possible to
+855 ensure sufficient time for FDA feedback prior to initiation of the trial.
+856
+857 The following information should be provided to support the proposed prior distribution (see
+858 Section V for further discussion):
+859
+860 • A detailed description of the proposed prior distribution, including explicit specification
+861 of prior parameterization and underlying assumptions. If a function of parameter(s) is of
+862 interest, this should include a description of any induced priors.
+863
+864 • A rationale for the plausibility of the assumptions.
+865
+866 • Any data or other information that informed the prior distribution.
+867
+868 If the trial will use an informative prior to borrow external information for inference on the
+869 primary estimand the following additional information should also be provided:
+870
+871 • A strong justification for borrowing that considers feasibility (e.g., of alternative
+872 approaches that do not involve borrowing) and the relevance of the available information.
+873
+874 • A thorough evaluation of all the available relevant evidence for informing the prior,
+875 including evidence that may suggest skepticism. This should include a discussion of steps
+876 taken to ensure information was not selectively obtained or used.
+877
+878 • A detailed description of each external information source used to inform the prior, as
+879 well as any source that was excluded and why, including a discussion of data quality and
+880 reliability, relevance, type (e.g., patient-level vs. summary-level) and completeness of
+881 data available, and a rationale for the degree of borrowing incorporating such factors.
+882
+883 • If multiple information sources are leveraged, a description of how the data will be
+884 synthesized and the modeling approach for their synthesis.
+885
+886 • If a discounting method is incorporated, a description and justification of the selected
+887 approach, including a rationale for any parameters (e.g., that impact the degree of
+888 borrowing).
+889
+890 • A discussion of how the proposed analysis will handle prior-data conflict (e.g., supported
+891 by simulation results).
+21
+
+--- Page 26 ---
+Contains Nonbinding Recommendations
+Draft — Not for Implementation
+892 • Quantification and discussion of the degree of influence of the prior distribution (e.g.,
+893 based on the ESS and other metrics).
+894
+895 • Planned sensitivity analyses that utilize a range of alternative reasonable choices for the
+896 prior distribution (e.g., that vary the amount or strength of borrowing from the prior
+897 distribution).
+898 The following information should be provided to support the proposed success criteria (see
+899 Section IV.A for further discussion):
+900
+901 • Specification of the success criteria for all primary and key secondary estimands. For
+902 success criteria based on the posterior probability, both the treatment effect threshold
+903 and the minimum probability of effectiveness should be discussed and justified.
+904
+905 • For trials that include interim analyses with the potential for early stopping for efficacy,
+906 specification of the success criteria for each decision point.
+907
+908 • For trials with success criteria calibrated to Type I error rate, justification that the choice
+909 of success criteria leads to control of the FWER (e.g., based on a detailed report of
+910 simulations used to estimate the Type I error rate).
+911 The following information should be provided to describe and support the appropriateness of the
+912 operating characteristics of the trial (see Section IV.B for further discussion):
+913
+914 • A discussion of how operating characteristics are estimated, with sufficient detail to
+915 facilitate FDA’s verification of the values and evaluation of the proposed sample size and
+916 other design elements.
+917
+918 • For study designs calibrated to Type I error rate, an evaluation of the Type I error rate
+919 and power under a range of plausible effect sizes, and estimation properties including
+920 bias and MSE of point estimates and coverage probability and width of intervals.
+921
+922 • For study designs not calibrated to Type I error rate, an evaluation of Bayesian power,
+923 expected bias, expected interval width, expected MSE, and other quantities to assess the
+924 accuracy of conclusions and treatment effect estimates under relevant priors.
+925
+926 • When simulations are required to estimate operating characteristics, a comprehensive
+927 simulation report. This report should include simulation code and a detailed description
+928 of the simulation design, implementation, and results. The scenarios and assumptions
+929 used in the simulation should be pre-specified, comprehensive, and plausible.
+930 For Bayesian analyses performed using approximate sampling algorithms (see Section VII),
+931 sponsors should provide a summary of the simulation setup. For example, for MCMC
+932 approaches, sponsors should provide a general summary of the length of warmup or burn-in,
+933 number of iterations, number of chains, convergence diagnostics, and any other important
+934 algorithm-specific settings (e.g., proposal distribution for the Metropolis algorithm, target
+22
+
+--- Page 27 ---
+Contains Nonbinding Recommendations
+Draft — Not for Implementation
+935 proposal acceptance probability when relevant for software implementation of Hamiltonian
+936 Monte Carlo). If computation requires specialized software, the software should be cited, and
+937 details of planned implementation provided. If such computation is required, there should be a
+938 description of how implementation issues (e.g., lack of convergence) will be addressed in the
+939 analysis.
+940
+941 For complex design proposals such as those with borrowing of external information based on
+942 informative priors, comparisons should be made between the operating characteristics of the
+943 proposed design and analysis plan and a variety of alternatives, including simpler designs. These
+944 comparisons should be documented as they help understand the potential advantages and
+945 limitations of the proposed design features. FDA also recommends that sponsors considering
+946 complex designs request a meeting with FDA prior to initiation of the trial. Including a detailed
+947 discussion of the proposed design and comparisons against alternative designs in meeting
+948 packages can help FDA reviewers understand and assess the appropriateness of trial operating
+949 characteristics.
+950
+951 B. Reporting Results from Bayesian Analyses
+952
+953 For completed clinical trials, sponsors should submit a clinical study report describing the
+954 design, analysis plan, and results from the trial. In addition to the typical content, the report of a
+955 trial with Bayesian analyses should include the following:
+956
+957 • The principal aspects of the design and analysis plan, as described in Section VIII.A.
+958
+959 • The results of the planned primary and secondary statistical analyses, including the
+960 treatment effect estimates, uncertainty in the estimates (e.g., with a credible interval), and
+961 whether pre-specified success criteria were met. The marginal posterior distributions of
+962 the estimands of interest should be described, including measures of location and
+963 variation. The results of sensitivity analyses, including quantifying and summarizing the
+964 sensitivity of results and conclusions to alternative reasonable choices for the prior
+965 distribution (see Section V.F). In the case of borrowing of external information with an
+966 informative prior in the primary analysis, the posterior results should be shown for other
+967 prior choices with different degrees of borrowing.
+968
+969 • The results from model checking, including an assessment of prior-data conflict and
+970 comparisons of the model predictions to the observed data.
+971
+972 • A report of sampling convergence diagnostics. For Bayesian analyses performed using
+973 non-direct sampling algorithms, this should include a description of the simulation
+974 settings as implemented. Any deviations from the planned implementation and a rationale
+975 for such deviations should be discussed.
+976
+977 • The software used to conduct analyses, including version details. Documented code
+978 should be provided for all primary and key secondary analyses and for any sensitivity
+979 analyses described in the study report. For Bayesian analyses performed using MCMC,
+23
+
+--- Page 28 ---
+Contains Nonbinding Recommendations
+Draft — Not for Implementation
+980 sufficient detail should be provided such that the results are reproducible. This requires
+981 reporting of the seed number(s) used during chain initiation.
+982
+983 • A discussion of the overall conclusions about the evidence related to the key trial
+984 objectives and analyses. This should briefly comment on the model chosen and the
+985 sensitivity of results and conclusions to alternative plausible assumptions and prior
+986 specifications.
+987 In some cases, it may be reasonable to include highly technical information (e.g., reports of
+988 sampling convergence diagnostics) in an Appendix to the study report or in a separate dedicated
+989 document.
+990
+991
+992 IX. GENERAL REFERENCES
+993
+994 Adcock, C. J. "A Bayesian approach to calculating sample sizes." Journal of the Royal Statistical
+995 Society: Series D (The Statistician) 37, no. 4-5 (1988): 433-439.
+996
+997 Evans, Michael, and Hadas Moshonov. "Checking for prior-data conflict." (2006): 893-914.
+998
+999 Gelman, Andrew. "Prior distributions for variance parameters in hierarchical models (comment
+1000 on article by Browne and Draper)." (2006): 515-534.
+1001
+1002 Gelman, Andrew, Aki Vehtari, Daniel Simpson, Charles C. Margossian, Bob Carpenter, Yuling
+1003 Yao, Lauren Kennedy, Jonah Gabry, Paul-Christian Bürkner, and Martin Modrák. "Bayesian
+1004 workflow." arXiv preprint arXiv:2011.01808 (2020).
+1005
+1006 Ji, Yuan, Ping Liu, Yisheng Li, and B. Nebiyou Bekele. "A modified toxicity probability interval
+1007 method for dose-finding trials." Clinical trials 7, no. 6 (2010): 653-663.
+1008
+1009 Jiang, Liyun, Lei Nie, and Ying Yuan. "Elastic priors to dynamically borrow information from
+1010 historical data in clinical trials." Biometrics 79, no. 1 (2023): 49-60.
+1011
+1012 Joseph, Lawrence, and Patrick Bélisle. "Bayesian sample size determination for normal means
+1013 and differences between normal means." Journal of the Royal Statistical Society Series D: The
+1014 Statistician 46, no. 2 (1997): 209-226.
+1015
+1016 Lin, Ruitao, Yanhong Zhou, Fangrong Yan, Daniel Li, and Ying Yuan. "BOIN12: Bayesian
+1017 optimal interval phase I/II trial design for utility-based dose finding in immunotherapy and
+1018 targeted therapies." JCO precision oncology 4 (2020): 1393-1402.
+1019
+1020 Malec, Donald. "A closer look at combining data among a small number of binomial
+1021 experiments." Statistics in medicine 20, no. 12 (2001): 1811-1824.
+1022
+1023 Morita, Satoshi, Peter F. Thall, and Peter Müller. "Determining the effective sample size of a
+1024 parametric prior." Biometrics 64, no. 2 (2008): 595-602.
+1025
+24
+
+--- Page 29 ---
+Contains Nonbinding Recommendations
+Draft — Not for Implementation
+1026 Neuenschwander, Beat, Michael Branson, and Thomas Gsponer. "Critical aspects of the
+1027 Bayesian approach to phase I cancer trials." Statistics in medicine 27, no. 13 (2008): 2420-2439.
+1028
+1029 Neuenschwander, Beat, Sebastian Weber, Heinz Schmidli, and Anthony O'Hagan. "Predictively
+1030 consistent prior effective sample sizes." Biometrics 76, no. 2 (2020): 578-587.
+1031
+1032 O'Hagan, Anthony, Caitlin E. Buck, Alireza Daneshkhah, J. Richard Eiser, Paul H. Garthwaite,
+1033 David J. Jenkinson, Jeremy E. Oakley, and Tim Rakow. "Uncertain judgements: eliciting experts'
+1034 probabilities." (2006).
+1035
+1036 O’Quigley, John, and Mark Conaway. "Continual reassessment and related dose-finding
+1037 designs." Statistical science: a review journal of the Institute of Mathematical Statistics 25, no. 2
+1038 (2010): 202.
+1039
+1040 Pennello, Gene, and Laura Thompson. "Experience with reviewing Bayesian medical device
+1041 trials." Journal of Biopharmaceutical Statistics 18, no. 1 (2007): 81-115.
+1042
+1043 Saville, Benjamin R., Donald A. Berry, Nicholas S. Berry, Kert Viele, and Scott M. Berry. "The
+1044 Bayesian time machine: accounting for temporal drift in multi-arm platform trials." Clinical
+1045 Trials 19, no. 5 (2022): 490-501.
+1046
+1047 Spiegelhalter, David J., Keith R. Abrams, and Jonathan P. Myles. Bayesian approaches to
+1048 clinical trials and health-care evaluation. Vol. 13. John Wiley & Sons, 2004.
+1049
+1050 Thall, Peter F., and John D. Cook. "Dose-finding based on efficacy–toxicity trade-
+1051 offs." Biometrics 60, no. 3 (2004): 684-693.
+1052
+1053 Tighiouart, Mourad, and André Rogatko, "Dose Finding with Escalation with Overdose Control
+1054 (EWOC) in Cancer Clinical Trials". Statistical Science, 2010, 25: 217–226.
+1055
+1056 Wang, Yun, Wenda Tu, William Koh, James Travis, Robert Abugov, Kiya Hamilton, Mengjie
+1057 Zheng, Roberto Crackel, Pablo Bonangelino, and Mark Rothmann. "Bayesian Hierarchical
+1058 Models for Subgroup Analysis." Pharmaceutical Statistics 23, no. 6 (2024): 1065-1083.
+1059
+1060 Yuan, Ao, and Gen Xiang Chai. "Optimal adaptive generalized Pólya urn design for multi-arm
+1061 clinical trials." Journal of Multivariate Analysis 99, no. 1 (2008): 1-24.
+1062
+1063 Yuan, Ying, Kenneth R. Hess, Susan G. Hilsenbeck, and Mark R. Gilbert. "Bayesian optimal
+1064 interval design: a simple and well-performing design for phase I oncology trials." Clinical
+1065 Cancer Research 22, no. 17 (2016): 4291-4301.
+25
